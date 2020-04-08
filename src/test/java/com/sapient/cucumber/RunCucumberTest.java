@@ -8,11 +8,8 @@ import io.cucumber.junit.CucumberOptions;
  * Cucumber Options
  */
 @RunWith(Cucumber.class)
-@CucumberOptions(//
-    features = "src/test/resources/features", //
-    plugin = {"pretty", "html:target/cucumber"}, //
-    glue = {"com.sapient.cucumber.stepdefs"}//
-) //
-public class CucumberConfig {
+@CucumberOptions(features = {"src/test/resources/features"},
+    plugin = {"pretty", "html:target/cucumber"}, glue = {"com.sapient.cucumber.stepdefs"})
+public class RunCucumberTest {
 
 }
