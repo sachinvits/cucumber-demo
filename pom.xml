@@ -4,14 +4,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-<!-- 
 	<parent>
-		<groupId>io.cucumber</groupId>
-		<artifactId>cucumber-examples</artifactId>
-		<version>5.7.0-SNAPSHOT</version>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.5.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-
- -->
+	
 	<groupId>com.sapient</groupId>
 	<artifactId>cucumber</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -19,24 +18,24 @@
 	<description>Demo project for Spring Boot with Cucumber</description>
 
 	<properties>
-	   <maven.compiler.source>1.8</maven.compiler.source>
-	   <maven.compiler.target>1.8</maven.compiler.target>	
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<java.version>1.8</java.version>
-		<cucumber.version>5.6.0</cucumber.version>
-		
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
-		<!-- <cucumber.version>4.2.0</cucumber.version> -->
-<!-- 		<assertj.version>3.4.1</assertj.version> -->	
- 		<spring-boot.version>2.2.5.RELEASE</spring-boot.version>
-		
-        <junit.version>4.13</junit.version>
-        <junit-jupiter.version>5.6.1</junit-jupiter.version>
-        <junit-platform.version>1.6.1</junit-platform.version>		
-		
-		
-	</properties>
+		<!-- <cucumber.version>5.6.0</cucumber.version> -->
 
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- <cucumber.version>4.2.0</cucumber.version> -->
+		<!-- <assertj.version>3.4.1</assertj.version> -->
+		<!-- <spring-boot.version>2.1.5.RELEASE</spring-boot.version> -->
+
+		<!-- <junit.version>4.13</junit.version>
+		<junit-jupiter.version>5.6.1</junit-jupiter.version>
+		<junit-platform.version>1.6.1</junit-platform.version> -->
+
+
+	</properties>
+<!-- 
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -48,94 +47,109 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
+ -->
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-logging</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
 		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- To generate getters, setters, equals, hascode, toString methods -->
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<!-- <scope>provided</scope> -->
+			<optional>true</optional>
+		</dependency>
+
+		<!-- To convert DTO to Entity and back -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-jdk8</artifactId>
+			<version>1.2.0.Final</version>
 		</dependency>
 
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>1.2.0.Final</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java8</artifactId>
+			<version>4.2.0</version>
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-spring</artifactId>
-			<version>${cucumber.version}</version>
+			<version>4.2.0</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-java</artifactId>
-			<version>${cucumber.version}</version>
-			<scope>test</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-junit</artifactId>
-			<version>${cucumber.version}</version>
+			<version>4.2.0</version>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<version>${junit-jupiter.version}</version>
-			<scope>test</scope>
+			<groupId>net.masterthought</groupId>
+			<artifactId>cucumber-reporting</artifactId>
+			<version>4.2.3</version>
 		</dependency>
+
+		<!-- To invoke REST endpoints from Cucumber step definitions -->
 		<dependency>
-			<groupId>org.junit.vintage</groupId>
-			<artifactId>junit-vintage-engine</artifactId>
-			<version>${cucumber.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- Spring doesn't include the right version for surefire to pickup TODO: 
-			Remove once the surefire or spring is upgraded -->
-		<dependency>
-			<groupId>org.junit.platform</groupId>
-			<artifactId>junit-platform-commons</artifactId>
-			<version>${junit-platform.version}</version>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
-            </plugin>
-        </plugins>
-    </build>
+	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<annotationProcessors>
+						<annotationProcessor>lombok.launch.AnnotationProcessorHider$AnnotationProcessor</annotationProcessor>
+						<annotationProcessor>org.mapstruct.ap.MappingProcessor</annotationProcessor>
+					</annotationProcessors>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
 
 </project>

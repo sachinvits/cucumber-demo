@@ -5,17 +5,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
 
-// @RunWith(SpringRunner.class)
-// @ContextConfiguration
-// @SpringBootTest(classes = CucumberApplication.class,
-// webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-
-
-// @ContextConfiguration(classes = CucumberApplication.class,
-// loader = SpringApplicationContextLoader.class)
-// @WebAppConfiguration
-// @IntegrationTest
-
 public class BaseStepDef {
 
   @Autowired
