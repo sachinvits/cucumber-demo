@@ -42,7 +42,7 @@ public class CreateUserStepDef extends BaseStepDef {
         .andExpect(status().isOk())//
         .andReturn();//
 
-    System.out.println(mvcResult.getResponse().getContentAsString());
+    LOG.info(mvcResult.getResponse().getContentAsString());
 
 
   }

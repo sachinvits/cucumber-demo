@@ -24,8 +24,7 @@ public class CucumberTestContextConfig {
   @Before
   public void setUp() throws Exception {
     System.out.println("**** Setting up Cucumber Test Spring Context ****");
-    // System.setProperty("webdriver.gecko.driver",
-    // "C:\\dev\\softwares\\selenium\\geckodriver.exe");
+    System.setProperty("webdriver.gecko.driver", "C:\\dev\\softwares\\selenium\\geckodriver.exe");
   }
 
 }
