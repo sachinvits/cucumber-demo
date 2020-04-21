@@ -6,13 +6,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
-import com.sapient.cucumber.CucumberTestContextConfig;
 import com.sapient.cucumber.entity.User;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import io.cucumber.datatable.DataTable;
 
-public class CreateUserStepDef extends CucumberTestContextConfig {
+public class CreateUserStepDef extends BaseStepDef {
 
   private String apiUri;
   private User givenUser;
