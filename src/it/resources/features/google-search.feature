@@ -5,4 +5,4 @@ Feature: Google Search
 	Then Find search textbox "q"
 	Then Enter search keyword "Cheese"
 	When Submit search
-	Then Verify results
+	Then Verify search results

@@ -47,7 +47,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- To generate getters, setters, equals, hascode, toString methods -->
+		<!-- To generate getters, setters, equals, hashcode, toString methods -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
