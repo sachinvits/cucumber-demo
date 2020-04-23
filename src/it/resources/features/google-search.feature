@@ -1,8 +1,9 @@
-Feature: Google Search
+Feature: Perform Google Search with keywords
 
-	Scenario: Navigate to Google and Search
-	Given Navigate to URL "http://www.google.com"
-	Then Find search textbox "q"
-	Then Enter search keyword "Cheese"
-	When Submit search
-	Then Verify search results
+	Scenario: In a web browser, user navigates to Google web page and performs search
+	Given A web browser
+	Then User navigates to URL "http://www.google.com"
+	Then on web page find search box
+	And user enters search keyword "Cheese"
+	And user submits the page to perform search
+	Then verify that page displays search results for "Cheese"

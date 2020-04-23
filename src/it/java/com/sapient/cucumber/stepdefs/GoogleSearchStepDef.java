@@ -11,15 +11,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
 
 public class GoogleSearchStepDef extends BaseStepDef {
 
   private WebDriver driver = null;
   private WebElement element = null;
-  private String searchKeyword = null;
 
   @After
   public void cleanup() {
@@ -30,24 +29,14 @@ public class GoogleSearchStepDef extends BaseStepDef {
     LOG.info("WebDriver closed successfully");
   }
 
-  @Then("^Enter search keyword \"([^\"]*)\"$")
-  public void enterSearchKeyword(final String keyword) throws Throwable {
+  @And("^user enters search keyword \"([^\"]*)\"$")
+  public void enterSearchKeyword(final String searchKeyword) throws Throwable {
 
-    LOG.info("Search Keyword={}", keyword);
-    searchKeyword = keyword;
+    LOG.info("Search Keyword={}", searchKeyword);
 
     assertNotNull(driver);
     assertNotNull(element);
     element.sendKeys(searchKeyword);
-
-    // final WebElement suggestions = wait.until(new Function<WebDriver, WebElement>() {
-    //
-    // @Override
-    // public WebElement apply(final WebDriver driver) {
-    // return driver.findElement(By.className("erkvQe"));
-    // }
-    //
-    // });
 
     final WebElement suggestions =
         getFluentWait().until((driver) -> driver.findElement(By.className("erkvQe")));
@@ -57,10 +46,10 @@ public class GoogleSearchStepDef extends BaseStepDef {
 
   }
 
-  @Then("^Find search textbox \"([^\"]*)\"$")
-  public void findSearchTextBox(final String elementName) throws Throwable {
+  @Then("^on web page find search box$")
+  public void findSearchTextBox() throws Throwable {
+    final String elementName = "q";
 
-    LOG.info("Find search textbox={}", elementName);
     element = driver.findElement(By.name(elementName));
 
     assertNotNull(element);
@@ -75,12 +64,19 @@ public class GoogleSearchStepDef extends BaseStepDef {
     return wait;
   }
 
-  @Given("^Navigate to URL \"([^\"]*)\"$")
-  public void navigateUrl(final String url) throws Throwable {
-
-    LOG.info("Navigate to URL={}", url);
+  @Given("^A web browser$")
+  public void initWebBrowser() {
+    LOG.info("Given A web browser");
 
     driver = new FirefoxDriver();
+    assertNotNull(driver);
+  }
+
+  @Given("^User navigates to URL \"([^\"]*)\"$")
+  public void navigateToUrl(final String url) throws Throwable {
+
+    LOG.info("Navigate to URL={}", url);
+    assertNotNull(driver);
     driver.get("http://www.google.com");
     LOG.info("Page Title: {}", driver.getTitle());
 
@@ -88,7 +84,7 @@ public class GoogleSearchStepDef extends BaseStepDef {
     assertEquals("Google", driver.getTitle());
   }
 
-  @When("^Submit search$")
+  @And("^user submits the page to perform search$")
   public void submitSearch() throws Throwable {
 
     LOG.info("Submit Search");
@@ -102,8 +98,8 @@ public class GoogleSearchStepDef extends BaseStepDef {
 
   }
 
-  @When("^Verify search results$")
-  public void verifySearchResults() throws Throwable {
+  @Then("^verify that page displays search results for \"([^\"]*)\"$")
+  public void verifySearchResults(final String searchKeyword) throws Throwable {
 
     LOG.info("Verifying search results");
 
