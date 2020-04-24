@@ -31,7 +31,7 @@ public class UserController {
     final Integer id = userService.addUser(user);
 
     final Map<String, Object> status = new HashMap<>();
-    status.put("status", String.format("User having id=%d, saved successfully", id));
+    status.put("status", String.format("User saved successfully, id=%d", id));
 
     return new ResponseEntity<>(status, HttpStatus.OK);
   }

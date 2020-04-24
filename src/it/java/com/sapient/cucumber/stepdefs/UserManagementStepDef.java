@@ -23,8 +23,18 @@ public class UserManagementStepDef extends BaseStepDef {
   private User givenUser;
   private MvcResult saveUserResult;
 
-  @Given("^On User management page Administrator adds a new user with following fields:$")
-  public void createUser(final DataTable dataTable) throws Throwable {
+  @Given("^On User management page Administrator adds a new user with details:\"([^\"]*)\"$")
+  public void createUser(final String userDetailsKey) throws Throwable {
+
+    final String userDetailsJson = getPropValue(userDetailsKey);
+
+    givenUser = mapper.readValue(userDetailsJson, User.class);
+
+    apiUri = "/v1/user/add";
+  }
+
+  // @Given("^On User management page Administrator adds a new user with details:$")
+  public void createUser11(final DataTable dataTable) throws Throwable {
 
     final List<List<String>> data = dataTable.asLists(String.class);
 
@@ -37,6 +47,7 @@ public class UserManagementStepDef extends BaseStepDef {
 
     apiUri = "/v1/user/add";
   }
+
 
   @When("^Administrator saves this new user$")
   public void saveUser() throws Throwable {
@@ -62,9 +73,9 @@ public class UserManagementStepDef extends BaseStepDef {
     final Map<String, String> statusMap =
         mapper.readValue(saveUserResult.getResponse().getContentAsString(), typeRef);
 
-    LOG.info(expectedResult);
+    LOG.info(getPropValue(expectedResult));
 
-    assertEquals(expectedResult, statusMap.get("status"));
+    assertEquals(getPropValue(expectedResult), statusMap.get("status"));
 
   }
 

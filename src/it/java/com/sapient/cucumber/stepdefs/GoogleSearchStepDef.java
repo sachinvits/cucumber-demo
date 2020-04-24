@@ -11,7 +11,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 
@@ -29,8 +28,10 @@ public class GoogleSearchStepDef extends BaseStepDef {
     LOG.info("WebDriver closed successfully");
   }
 
-  @And("^user enters search keyword \"([^\"]*)\"$")
+  @Then("^user enters keyword \"([^\"]*)\" in search box$")
   public void enterSearchKeyword(final String searchKeyword) throws Throwable {
+
+    findSearchTextBox();
 
     final String keyword = getPropValue(searchKeyword);
     LOG.info("Search Keyword={}", keyword);
@@ -47,8 +48,7 @@ public class GoogleSearchStepDef extends BaseStepDef {
 
   }
 
-  @Then("^on web page find search box$")
-  public void findSearchTextBox() throws Throwable {
+  private void findSearchTextBox() throws Throwable {
     final String elementName = getPropValue("google.search.textbox.name");
 
     element = driver.findElement(By.name(elementName));
@@ -65,28 +65,21 @@ public class GoogleSearchStepDef extends BaseStepDef {
     return wait;
   }
 
-  @Given("^A web browser$")
-  public void initWebBrowser() {
-    LOG.info("Given A web browser");
+  @Given("^In a web browser user navigates to URL \"([^\"]*)\"$")
+  public void navigateToUrl(final String url) throws Throwable {
 
     driver = new FirefoxDriver();
     assertNotNull(driver);
-  }
-
-  @Given("^User navigates to URL \"([^\"]*)\"$")
-  public void navigateToUrl(final String url) throws Throwable {
 
     LOG.info("Navigate to URL={}", url);
-    assertNotNull(driver);
 
     driver.get(getPropValue(url));
     LOG.info("Page Title: {}", driver.getTitle());
 
-    assertNotNull(driver);
     assertEquals("Google", driver.getTitle());
   }
 
-  @And("^user submits the page to perform search$")
+  @Then("^user submits the page to perform search$")
   public void submitSearch() throws Throwable {
 
     LOG.info("Submit Search");
@@ -100,7 +93,7 @@ public class GoogleSearchStepDef extends BaseStepDef {
 
   }
 
-  @Then("^verify that page displays search results for \"([^\"]*)\" with message:$")
+  @Then("^verify that page displays search results for keyword \"([^\"]*)\" with message:$")
   public void verifySearchResults(final String searchKeyword, final String expectedResult)
       throws Throwable {
 
