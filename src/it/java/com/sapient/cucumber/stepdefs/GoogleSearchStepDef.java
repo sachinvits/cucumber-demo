@@ -32,11 +32,12 @@ public class GoogleSearchStepDef extends BaseStepDef {
   @And("^user enters search keyword \"([^\"]*)\"$")
   public void enterSearchKeyword(final String searchKeyword) throws Throwable {
 
-    LOG.info("Search Keyword={}", searchKeyword);
+    final String keyword = getPropValue(searchKeyword);
+    LOG.info("Search Keyword={}", keyword);
 
     assertNotNull(driver);
     assertNotNull(element);
-    element.sendKeys(searchKeyword);
+    element.sendKeys(keyword);
 
     final WebElement suggestions =
         getFluentWait().until((driver) -> driver.findElement(By.className("erkvQe")));
@@ -48,7 +49,7 @@ public class GoogleSearchStepDef extends BaseStepDef {
 
   @Then("^on web page find search box$")
   public void findSearchTextBox() throws Throwable {
-    final String elementName = "q";
+    final String elementName = getPropValue("google.search.textbox.name");
 
     element = driver.findElement(By.name(elementName));
 
@@ -77,7 +78,8 @@ public class GoogleSearchStepDef extends BaseStepDef {
 
     LOG.info("Navigate to URL={}", url);
     assertNotNull(driver);
-    driver.get("http://www.google.com");
+
+    driver.get(getPropValue(url));
     LOG.info("Page Title: {}", driver.getTitle());
 
     assertNotNull(driver);
@@ -98,13 +100,14 @@ public class GoogleSearchStepDef extends BaseStepDef {
 
   }
 
-  @Then("^verify that page displays search results for \"([^\"]*)\"$")
-  public void verifySearchResults(final String searchKeyword) throws Throwable {
+  @Then("^verify that page displays search results for \"([^\"]*)\" with message:$")
+  public void verifySearchResults(final String searchKeyword, final String expectedResult)
+      throws Throwable {
 
     LOG.info("Verifying search results");
 
-    getFluentWait().until(
-        (driver) -> driver.getTitle().equals(String.format("%s - Google Search", searchKeyword)));
+    getFluentWait().until((driver) -> driver.getTitle()
+        .equals(String.format("%s - Google Search", getPropValue(searchKeyword))));
 
     getFluentWait().until((driver) -> driver.findElement(By.id("ucs")));
 
@@ -112,7 +115,9 @@ public class GoogleSearchStepDef extends BaseStepDef {
         getFluentWait().until((driver) -> driver.findElement(By.id("result-stats")));
 
     assertNotNull(resultStats);
-    assertTrue(resultStats.getText().contains("About"));
+    // assertTrue(resultStats.getText().contains("About"));
+
+    assertTrue(resultStats.getText().startsWith(getPropValue(expectedResult)));
 
   }
 

@@ -12,6 +12,4 @@ Feature: As an Administrator, the application should allow me to add new user, u
 		Then application shows below message on the page:
 		""" 
 		User having id=100, saved successfully
-		"""	
-		
-		
+		"""			
