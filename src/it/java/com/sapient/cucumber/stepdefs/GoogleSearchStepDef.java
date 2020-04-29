@@ -3,14 +3,12 @@ package com.sapient.cucumber.stepdefs;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import java.time.Duration;
-import org.junit.After;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
+import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 
@@ -20,12 +18,12 @@ public class GoogleSearchStepDef extends BaseStepDef {
   private WebElement element = null;
 
   @After
-  public void cleanup() {
-    assertNotNull(driver);
-
-    LOG.info("Closing WebDriver");
-    driver.close();
-    LOG.info("WebDriver closed successfully");
+  public void cleanup(final Scenario scenario) {
+    if (driver != null) {
+      LOG.info("Closing WebDriver");
+      driver.quit();
+      LOG.info("WebDriver closed successfully");
+    }
   }
 
   @Then("^user enters keyword \"([^\"]*)\" in search box$")
@@ -41,7 +39,7 @@ public class GoogleSearchStepDef extends BaseStepDef {
     element.sendKeys(keyword);
 
     final WebElement suggestions =
-        getFluentWait().until((driver) -> driver.findElement(By.className("erkvQe")));
+        getFluentWait(driver).until((driver) -> driver.findElement(By.className("erkvQe")));
 
     assertNotNull(suggestions);
     assertEquals("ul", suggestions.getTagName());
@@ -56,13 +54,6 @@ public class GoogleSearchStepDef extends BaseStepDef {
     assertNotNull(element);
     assertEquals("Search", element.getAttribute("title"));
     LOG.info("Element Title: {}", element.getAttribute("title"));
-  }
-
-  private Wait<WebDriver> getFluentWait() {
-    final Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)//
-        .withTimeout(Duration.ofSeconds(10))//
-        .pollingEvery(Duration.ofSeconds(1));//
-    return wait;
   }
 
   @Given("^In a web browser user navigates to URL \"([^\"]*)\"$")
@@ -99,13 +90,13 @@ public class GoogleSearchStepDef extends BaseStepDef {
 
     LOG.info("Verifying search results");
 
-    getFluentWait().until((driver) -> driver.getTitle()
+    getFluentWait(driver).until((driver) -> driver.getTitle()
         .equals(String.format("%s - Google Search", getPropValue(searchKeyword))));
 
-    getFluentWait().until((driver) -> driver.findElement(By.id("ucs")));
+    getFluentWait(driver).until((driver) -> driver.findElement(By.id("ucs")));
 
     final WebElement resultStats =
-        getFluentWait().until((driver) -> driver.findElement(By.id("result-stats")));
+        getFluentWait(driver).until((driver) -> driver.findElement(By.id("result-stats")));
 
     assertNotNull(resultStats);
     // assertTrue(resultStats.getText().contains("About"));

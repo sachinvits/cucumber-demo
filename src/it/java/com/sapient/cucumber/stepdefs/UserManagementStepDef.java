@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
@@ -15,7 +14,6 @@ import com.sapient.cucumber.entity.User;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import io.cucumber.datatable.DataTable;
 
 public class UserManagementStepDef extends BaseStepDef {
 
@@ -32,22 +30,6 @@ public class UserManagementStepDef extends BaseStepDef {
 
     apiUri = "/v1/user/add";
   }
-
-  // @Given("^On User management page Administrator adds a new user with details:$")
-  public void createUser11(final DataTable dataTable) throws Throwable {
-
-    final List<List<String>> data = dataTable.asLists(String.class);
-
-    givenUser = new User();
-    givenUser.setId(Integer.valueOf(data.get(1).get(1)));
-    givenUser.setUserName(data.get(2).get(1));
-    givenUser.setFirstName(data.get(3).get(1));
-    givenUser.setLastName(data.get(3).get(1));
-    givenUser.setEmail(data.get(4).get(1));
-
-    apiUri = "/v1/user/add";
-  }
-
 
   @When("^Administrator saves this new user$")
   public void saveUser() throws Throwable {
