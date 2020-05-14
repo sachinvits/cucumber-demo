@@ -42,7 +42,9 @@ public class UserController {
 
     final List<User> users = userService.findAll();
 
+
     final Map<String, Object> status = new HashMap<>();
+    System.out.println("Hello");
     status.put("users", users);
 
     return new ResponseEntity<>(status, HttpStatus.OK);
